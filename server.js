@@ -64,5 +64,8 @@ function getSession(req, res) {
 var userService = require('./services/user.service.server');
 userService(app);
 
+var likeService = require('./services/like.service.server');
+likeService(app);
+
 
 app.listen(4000);

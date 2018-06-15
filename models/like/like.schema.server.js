@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 var likeSchema = mongoose.Schema({
-  movie: {type: mongoose.Schema.Types.ObjectId, ref: 'MovieModel'},
-  student: {type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'},
-  // grade: String
-});
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'},
+    movie: {type: mongoose.Schema.Types.ObjectId, ref: 'MovieModel'},
+
+    // grade: String
+}, {collection: 'like'});
 module.exports = likeSchema;
+

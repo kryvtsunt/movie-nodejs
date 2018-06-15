@@ -2,8 +2,13 @@ var mongoose = require('mongoose');
 var movieSchema = require('./movie.schema.server');
 var movieModel = mongoose.model('MovieModel', movieSchema);
 
-function createMovie(section) {
-    return movieModel.create(section);
+function createMovie(movie) {
+    movie.likes = 0;
+    return movieModel.create(movie);
+}
+
+function findMovieByApiId(movieId) {
+    return movieModel.findOne({id: movieId});
 }
 
 function findMoviesLikedByUser(userId) {
@@ -11,8 +16,8 @@ function findMoviesLikedByUser(userId) {
 }
 
 function incrementMovieLikes(movieId) {
-    return movieModel.update({_id: movieId}, {
-        $inc: {nlikes: 1}
+    return  movieModel.update({_id: movieId}, {
+        $inc: {likes: 1}
     });
 }
 
@@ -27,5 +32,6 @@ module.exports = {
     createMovie: createMovie,
     findMoviesLikedByUser: findMoviesLikedByUser,
     incrementMovieLikes: incrementMovieLikes,
-    decrementMovieLikes: decrementMovieLikes
+    decrementMovieLikes: decrementMovieLikes,
+    findMovieByApiId: findMovieByApiId
 };

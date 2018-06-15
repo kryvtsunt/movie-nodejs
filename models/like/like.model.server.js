@@ -27,8 +27,17 @@ function findUsersforLikedMovie(movieId) {
     .exec();
 }
 
+function checkLike(userId, movieId){
+    var like = {
+        user: userId,
+        movie: movieId
+    }
+    return likeModel.findOne(like);
+}
+
 module.exports = {
     userLikesMovie: userLikesMovie,
     findLikedMoviesForUser: findLikedMoviesForUser,
-    findUsersforLikedMovie: findUsersforLikedMovie
+    findUsersforLikedMovie: findUsersforLikedMovie,
+    checkLike: checkLike
 };
