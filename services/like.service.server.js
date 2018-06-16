@@ -34,8 +34,6 @@ module.exports = function (app) {
     }
 
 
-
-
     function userLikesMovie(req, res) {
         var movie = req.body;
         var user = req.session['currentUser']
