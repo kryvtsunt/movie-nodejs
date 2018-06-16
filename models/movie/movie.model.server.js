@@ -16,16 +16,23 @@ function findMoviesLikedByUser(userId) {
 }
 
 function incrementMovieLikes(movieId) {
-    return  movieModel.update({_id: movieId}, {
+    return movieModel.update({_id: movieId}, {
         $inc: {likes: 1}
     });
 }
 
 function decrementMovieLikes(movieId) {
     return movieModel.update({_id: movieId}, {
-        $inc: {nlikes: -1}
+        $inc: {likes: -1}
     });
 }
+
+function incrementMovieComments(movieId) {
+    return  movieModel.update({_id: movieId}, {
+        $inc: {comments: 1}
+    });
+}
+
 
 
 module.exports = {
@@ -33,5 +40,6 @@ module.exports = {
     findMoviesLikedByUser: findMoviesLikedByUser,
     incrementMovieLikes: incrementMovieLikes,
     decrementMovieLikes: decrementMovieLikes,
-    findMovieByApiId: findMovieByApiId
+    findMovieByApiId: findMovieByApiId,
+    incrementMovieComments: incrementMovieComments,
 };

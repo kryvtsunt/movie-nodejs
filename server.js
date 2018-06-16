@@ -60,12 +60,18 @@ function getSession(req, res) {
     res.send(value);
 }
 
+var commentService = require('./services/comment.service.server');
+commentService(app);
 
 var userService = require('./services/user.service.server');
 userService(app);
 
 var likeService = require('./services/like.service.server');
 likeService(app);
+
+var movieService = require('./services/movie.service.server');
+movieService(app);
+
 
 
 app.listen(4000);

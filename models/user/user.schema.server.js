@@ -6,7 +6,8 @@ var userSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     email: String,
-    likedMovies: [String]
+    // likedMovies: [String],
+    img_path: String
 }, {collection: 'user'});
 
 module.exports = userSchema;
