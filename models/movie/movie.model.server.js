@@ -12,7 +12,7 @@ function findMovieByApiId(movieId) {
 }
 
 function findMoviesLikedByUser(userId) {
-    return sectionModel.find({userId: userId});
+    return movieModel.find({userId: userId});
 }
 
 function incrementMovieLikes(movieId) {
@@ -26,6 +26,7 @@ function decrementMovieLikes(movieId) {
         $inc: {likes: -1}
     });
 }
+
 
 function incrementMovieComments(movieId) {
     return  movieModel.update({_id: movieId}, {

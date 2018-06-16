@@ -69,6 +69,9 @@ userService(app);
 var likeService = require('./services/like.service.server');
 likeService(app);
 
+var bookmarkService = require('./services/bookmark.service.server');
+bookmarkService(app);
+
 var movieService = require('./services/movie.service.server');
 movieService(app);
 
