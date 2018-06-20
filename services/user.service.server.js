@@ -8,15 +8,18 @@ module.exports = function (app) {
     app.post('/api/login', login);
     app.get('/api/status', checkStatus);
     app.put('/api/user/update', updateUser);
+    app.delete('/api/user/:userId/delete', deleteUser);
     app.get('/api/admin/status', checkAdminStatus);
 
     var userModel = require('../models/user/user.model.server');
+
+
 
     function login(req, res) {
         var credentials = req.body;
         userModel
             .findUserByCredentials(credentials)
-            .then(function(user) {
+            .then(function (user) {
                 if (user !== null) {
                     req.session['currentUser'] = user;
                 }
@@ -32,6 +35,14 @@ module.exports = function (app) {
             .then(function () {
                 req.session['currentUser'] = user;
                 res.send(user);
+            })
+    }
+
+    function deleteUser(req, res) {
+        var id = req.params['userId'];
+        userModel.deleteUser(id)
+            .then(function (user) {
+                res.json(user);
             })
     }
 

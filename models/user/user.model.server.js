@@ -19,8 +19,20 @@ function createUser(user) {
     return userModel.create(user);
 }
 
+function deleteUser(id) {
+    return userModel.remove({_id: id});
+}
+
 function updateUser(userId, user) {
-    return userModel.update({_id: userId},{$set:{ firstName: user.firstName, lastName: user.lastName, email: user.email, password: user.password, img_path: user.img_path}, phone: user.phone, address: user.address})
+    return userModel.update({_id: userId}, {
+        $set: {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            password: user.password,
+            img_path: user.img_path
+        }, phone: user.phone, address: user.address
+    })
 }
 
 function findAllUsers() {
@@ -33,7 +45,8 @@ var api = {
     findUserById: findUserById,
     findUserByCredentials: findUserByCredentials,
     updateUser: updateUser,
-    findUserByUsername: findUserByUsername
+    findUserByUsername: findUserByUsername,
+    deleteUser: deleteUser,
 };
 
 module.exports = api;
