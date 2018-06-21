@@ -3,12 +3,14 @@ module.exports = function (app) {
     app.get('/api/user/:userId', findUserById);
     app.get('/api/user/username/:userName', findUserByUsername);
     app.post('/api/user', createUser);
+    app.post('/api/register', registerUser);
     app.get('/api/profile', profile);
     app.post('/api/logout', logout);
     app.post('/api/login', login);
     app.get('/api/status', checkStatus);
     app.put('/api/user/update', updateUser);
-    app.delete('/api/user/:userId/delete', deleteUser);
+    app.put('/api/user/:userId/update', updateUserById);
+    app.delete('/api/user/:userId/delete', deleteUserById);
     app.get('/api/admin/status', checkAdminStatus);
 
     var userModel = require('../models/user/user.model.server');
@@ -38,7 +40,16 @@ module.exports = function (app) {
             })
     }
 
-    function deleteUser(req, res) {
+    function updateUserById(req, res) {
+        var user = req.body;
+        var id = req.params['userId']
+        userModel.updateUser(id, user)
+            .then(function () {
+                res.json(user);
+            })
+    }
+
+    function deleteUserById(req, res) {
         var id = req.params['userId'];
         userModel.deleteUser(id)
             .then(function (user) {
@@ -85,11 +96,19 @@ module.exports = function (app) {
         res.send(req.session['currentUser']);
     }
 
-    function createUser(req, res) {
+    function registerUser(req, res) {
         var user = req.body;
         userModel.createUser(user)
             .then(function (user) {
                 req.session['currentUser'] = user;
+                res.send(user);
+            })
+    }
+
+    function createUser(req, res) {
+        var user = req.body;
+        userModel.createUser(user)
+            .then(function (user) {
                 res.send(user);
             })
     }

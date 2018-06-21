@@ -25,14 +25,14 @@ function userUnbookmarksMovie(user, movie) {
     return bookmarkModel.deleteOne(bookmark);
 }
 
-function findBookmarkdMoviesForUser(userId) {
+function findBookmarkedMoviesForUser(userId) {
     return bookmarkModel
         .find({user: userId})
         .populate('movie')
         .exec();
 }
 
-function findUsersforBookmarkdMovie(movieId) {
+function findUsersforBookmarkedMovie(movieId) {
     return bookmarkModel
         .find({movie: movieId})
         .populate('user')
@@ -51,7 +51,7 @@ function checkBookmark(userId, movieId) {
 module.exports = {
     userBookmarksMovie: userBookmarksMovie,
     userUnbookmarksMovie: userUnbookmarksMovie,
-    findBookmarkdMoviesForUser: findBookmarkdMoviesForUser,
-    findUsersforBookmarkdMovie: findUsersforBookmarkdMovie,
+    findBookmarkedMoviesForUser: findBookmarkedMoviesForUser,
+    findUsersforBookmarkedMovie: findUsersforBookmarkedMovie,
     checkBookmark: checkBookmark,
 };

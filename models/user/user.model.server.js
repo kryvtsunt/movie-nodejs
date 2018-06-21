@@ -15,7 +15,12 @@ function findUserByUsername(username) {
 }
 
 function createUser(user) {
-    user.role = "student";
+    if (user.img_path === '' || user.img_path === undefined) {
+        user.img_path = "https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100"
+    }
+    if (user.role === ''|| user.role === undefined ) {
+        user.role = 'user';
+    }
     return userModel.create(user);
 }
 
@@ -24,14 +29,25 @@ function deleteUser(id) {
 }
 
 function updateUser(userId, user) {
+    if (user.img_path === '' || user.img_path === undefined) {
+        user.img_path = "https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100"
+    }
+    if (user.role === ''|| user.role === undefined ) {
+        user.role = 'user';
+    }
     return userModel.update({_id: userId}, {
         $set: {
+            username: user.username,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
             password: user.password,
-            img_path: user.img_path
-        }, phone: user.phone, address: user.address
+            gender: user.gender,
+            dateB: user.dateB,
+            img_path: user.img_path,
+            phone: user.phone,
+            address: user.address
+        },
     })
 }
 

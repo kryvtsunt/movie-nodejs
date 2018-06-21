@@ -6,6 +6,10 @@ module.exports = function (app) {
         userUnbookmarksMovie);
     app.get('/api/bookmark/movie/:movieId/check',
         checkBookmark);
+    app.get('/api/bookmark/user/:userId/movie/',
+        findAllBookmarkedMoviesForUser);
+
+
 
     var bookmarkModel = require('../models/bookmark/bookmark.model.server');
     var movieModel = require('../models/movie/movie.model.server');
@@ -31,6 +35,15 @@ module.exports = function (app) {
                 }
             })
 
+    }
+
+    function findAllBookmarkedMoviesForUser(req, res)
+    {
+        var userId = req.params['userId']
+        bookmarkModel.findBookmarkedMoviesForUser(userId)
+            .then(function (result) {
+                res.json(result);
+            })
     }
 
 

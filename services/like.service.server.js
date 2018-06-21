@@ -6,6 +6,8 @@ module.exports = function (app) {
         userUnlikesMovie);
     app.get('/api/like/movie/:movieId/check',
         checkLike);
+    app.get('/api/like/user/:userId/movie/',
+        findAllLikedMoviesForUser);
 
     var likeModel = require('../models/like/like.model.server');
     var movieModel = require('../models/movie/movie.model.server');
@@ -31,6 +33,15 @@ module.exports = function (app) {
                 }
             })
 
+    }
+
+    function findAllLikedMoviesForUser(req, res)
+    {
+        var userId = req.params['userId']
+        likeModel.findLikedMoviesForUser(userId)
+            .then(function (result) {
+                res.json(result);
+            })
     }
 
 
