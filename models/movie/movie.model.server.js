@@ -11,6 +11,10 @@ function findMovieByApiId(movieId) {
     return movieModel.findOne({id: movieId});
 }
 
+function findAllMovies(){
+    return movieModel.find();
+}
+
 function findMoviesLikedByUser(userId) {
     return movieModel.find({userId: userId});
 }
@@ -38,6 +42,7 @@ function incrementMovieComments(movieId) {
 
 module.exports = {
     createMovie: createMovie,
+    findAllMovies: findAllMovies,
     findMoviesLikedByUser: findMoviesLikedByUser,
     incrementMovieLikes: incrementMovieLikes,
     decrementMovieLikes: decrementMovieLikes,
