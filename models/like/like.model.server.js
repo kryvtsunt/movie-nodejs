@@ -10,8 +10,6 @@ function userLikesMovie(user, movie) {
     var like = {
         user: user._id,
         movie: movie._id,
-        username: user.username,
-        title: movie.title,
         date: date.toString()
     };
     return likeModel.create(like);

@@ -10,8 +10,6 @@ function userBookmarksMovie(user, movie) {
     var bookmark = {
         user: user._id,
         movie: movie._id,
-        username: user.username,
-        title: movie.title,
         date: date.toString()
     };
     return bookmarkModel.create(bookmark);

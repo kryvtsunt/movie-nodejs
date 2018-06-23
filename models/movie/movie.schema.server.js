@@ -6,6 +6,6 @@ var movieSchema = mongoose.Schema({
     poster_path: String,
     overview: String,
     likes: Number,
-    comments: Number,
+    reviews: Number,
 }, {collection: 'movie'});
 module.exports = movieSchema;

@@ -1,20 +1,24 @@
 module.exports = function (app) {
 
-    app.post('/api/like/movie/add',
-        userLikesMovie);
-    app.post('/api/like/movie/remove',
-        userUnlikesMovie);
-    app.get('/api/like/movie/:movieId/check',
-        checkLike);
-    app.get('/api/like/user/:userId/movie/',
-        findAllLikedMoviesForUser);
+    app.post('/api/activity/add',
+        userActivitysMovie);
+    app.post('/api/activity/remove',
+        userUnactivitysMovie);
+    app.get('/api/activity/user/:userId/',
+        findAllActivitydMoviesForUser);
+    app.get('/api/activity', findAllActivities)
 
-    var likeModel = require('../models/like/like.model.server');
-    var movieModel = require('../models/movie/movie.model.server');
     var activityModel = require('../models/activity/activity.model.server');
+    var movieModel = require('../models/movie/movie.model.server');
 
+    function findAllActivities(req, res){
+        activityModel.findAllActivities()
+            .then(function(activities){
+                res.json(activities)
+            })
+    }
 
-    function checkLike(req, res) {
+    function checkActivity(req, res) {
         var id = req.params['movieId'];
         var user = req.session['currentUser']
         var userId = user._id
@@ -23,9 +27,9 @@ module.exports = function (app) {
                 if (m === null) {
                     res.send(false)
                 } else {
-                    likeModel.checkLike(userId, m._id)
-                        .then(function (like) {
-                            if (like === null) {
+                    activityModel.checkActivity(userId, m._id)
+                        .then(function (activity) {
+                            if (activity === null) {
                                 res.send(false)
                             } else {
                                 res.send(true)
@@ -36,23 +40,20 @@ module.exports = function (app) {
 
     }
 
-    function findAllLikedMoviesForUser(req, res)
+    function findAllActivitydMoviesForUser(req, res)
     {
         var userId = req.params['userId']
-        likeModel.findLikedMoviesForUser(userId)
+        activityModel.findActivitydMoviesForUser(userId)
             .then(function (result) {
                 res.json(result);
             })
     }
 
 
-    function userLikesMovie(req, res) {
+    function userActivitysMovie(req, res) {
         var movie = req.body;
         var user = req.session['currentUser']
-        var userId = user._id;
         var movieId;
-
-        var type = 'like'
         movieModel.findMovieByApiId(movie.id)
             .then(function (m) {
                 if (m === null) {
@@ -63,13 +64,10 @@ module.exports = function (app) {
             })
             .then(function (mov) {
                 movieId = mov._id;
-                return likeModel.userLikesMovie(user, mov)
+                return activityModel.userActivitysMovie(user, mov)
             })
             .then(function () {
-                return movieModel.incrementMovieLikes(movieId)
-            })
-            .then(function(){
-                return activityModel.addActivity(userId, movieId, type)
+                return movieModel.incrementMovieActivitys(movieId)
             })
             .then(function (result) {
                 res.send(result);
@@ -77,22 +75,17 @@ module.exports = function (app) {
     }
 
 
-    function userUnlikesMovie(req, res) {
+    function userUnactivitysMovie(req, res) {
         var movie = req.body;
         var user = req.session['currentUser']
-        var userId = user._id
         var movieId;
-        var type='unlike'
         movieModel.findMovieByApiId(movie.id)
             .then(function (mov) {
                 movieId = mov._id;
-                return likeModel.userUnlikesMovie(user, mov)
+                return activityModel.userUnactivitysMovie(user, mov)
             })
             .then(function () {
-                return movieModel.decrementMovieLikes(movieId)
-            })
-            .then(function(){
-                return activityModel.addActivity(userId, movieId, type)
+                return movieModel.decrementMovieActivitys(movieId)
             })
             .then(function (result) {
                 res.send(result);

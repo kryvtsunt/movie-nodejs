@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
-var commentSchema = mongoose.Schema({
+var reviewSchema = mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'},
     movie: {type: mongoose.Schema.Types.ObjectId, ref: 'MovieModel'},
-    username: String,
-    title: String,
-    comment: String,
+    review: String,
+    vissibility: String,
+    recomended: Boolean,
     date: String,
-}, {collection: 'comment'});
-module.exports = commentSchema;
+}, {collection: 'review'});
+module.exports = reviewSchema;
 

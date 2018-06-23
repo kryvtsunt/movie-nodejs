@@ -1,32 +1,32 @@
 module.exports = function (app) {
 
-    app.get('/api/comment/movie/:movieId/find', findAllComments);
-    app.post('/api/comment/movie/:movieId/add', userCommentsMovie);
+    app.get('/api/review/movie/:movieId/find', findAllReviews);
+    app.post('/api/review/movie/:movieId/add', userReviewsMovie);
 
 
-    var commentModel = require('../models/comment/comment.model.server');
+    var reviewModel = require('../models/review/review.model.server');
     var movieModel = require('../models/movie/movie.model.server');
 
 
-    function findAllComments(req, res) {
+    function findAllReviews(req, res) {
         var id = req.params['movieId'];
         movieModel.findMovieByApiId(id)
             .then(function (m) {
                 if (m === null) {
                     res.send([])
                 } else {
-                    commentModel.findAllComments(m._id)
-                        .then(function (comments) {
-                            res.send(comments)
+                    reviewModel.findAllReviewsForMovie(m._id)
+                        .then(function (reviews) {
+                            res.send(reviews)
                         })
                 }
             })
 
     }
 
-    function userCommentsMovie(req, res) {
+    function userReviewsMovie(req, res) {
         var body = req.body;
-        var comment = body.comment;
+        var review = body.review;
         var movie = body.movie;
         var movieId = req.params['movieId'];
         var user = req.session['currentUser']
@@ -34,9 +34,9 @@ module.exports = function (app) {
         movieModel.findMovieByApiId(movieId)
             .then(function (m) {
                     if (m !== null) {
-                        commentModel.userCommentsMovie(user, m, comment)
+                        reviewModel.userReviewsMovie(user, m, review)
                             .then(function () {
-                                movieModel.incrementMovieComments(m._id)
+                                movieModel.incrementMovieReviews(m._id)
                             })
                             .then(function (result) {
                                 res.send(result);
@@ -45,10 +45,10 @@ module.exports = function (app) {
                     else {
                         movieModel.createMovie(movie)
                             .then(function (m) {
-                                commentModel.userCommentsMovie(user, m, comment)
+                                reviewModel.userReviewsMovie(user, m, review)
                             })
                             .then(function () {
-                                movieModel.incrementMovieComments(m._id)
+                                movieModel.incrementMovieReviews(m._id)
                             })
                             .then(function (result) {
                                 res.send(result);

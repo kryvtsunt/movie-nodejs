@@ -60,7 +60,7 @@ function getSession(req, res) {
     res.send(value);
 }
 
-var commentService = require('./services/comment.service.server');
+var commentService = require('./services/review.service.server');
 commentService(app);
 
 var userService = require('./services/user.service.server');
@@ -71,6 +71,9 @@ likeService(app);
 
 var bookmarkService = require('./services/bookmark.service.server');
 bookmarkService(app);
+
+var activityService = require('./services/activity.service.server');
+activityService(app);
 
 var movieService = require('./services/movie.service.server');
 movieService(app);
