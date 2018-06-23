@@ -11,7 +11,9 @@ var userSchema = mongoose.Schema({
     img_path: String,
     role: String,
     gender: String,
-    dateB: String
+    dateB: String,
+    followers: Number,
+    followings: Number
 }, {collection: 'user'});
 
 module.exports = userSchema;

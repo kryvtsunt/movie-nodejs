@@ -10,7 +10,7 @@ function userBookmarksMovie(user, movie) {
     var bookmark = {
         user: user._id,
         movie: movie._id,
-        date: date.toString()
+        date: date
     };
     return bookmarkModel.create(bookmark);
 }
