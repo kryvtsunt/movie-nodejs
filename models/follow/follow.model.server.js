@@ -8,15 +8,15 @@ var followModel = mongoose.model(
 
 function findAllConnections(){
     return followModel.find()
-        .populate('movie')
-        .populate('user')
+        .populate('follower')
+        .populate('following')
         .exec();
 }
 
 function addFollow(userId, user2Id){
     var follow = {
         follower: userId,
-        following: movieId,
+        following: user2Id,
     };
     return followModel.create(follow);
 }

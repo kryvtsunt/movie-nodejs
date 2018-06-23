@@ -78,6 +78,9 @@ activityService(app);
 var movieService = require('./services/movie.service.server');
 movieService(app);
 
+var followService = require('./services/follow.service.server');
+followService(app);
+
 
 
 app.listen(4000);
