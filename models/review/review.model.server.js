@@ -10,12 +10,19 @@ function userReviewsMovie(user, movie, review) {
     var c = {
         user: user._id,
         movie: movie._id,
-        username: user.username,
-        title: movie.title,
         review: review,
         date: date.toString()
     };
     return reviewModel.create(c);
+}
+
+function userUnReviewsMovie(userId, movieId, review) {
+    var c = {
+        user: userId,
+        movie: movieId,
+        review: review,
+    };
+    return reviewModel.remove(c);
 }
 
 function findReviewedMoviesForUser(userId) {
@@ -41,5 +48,6 @@ module.exports = {
     userReviewsMovie: userReviewsMovie,
     findReviewedMoviesForUser: findReviewedMoviesForUser,
     findAllReviewsForMovie: findAllReviewsForMovie,
-    deleteMovie: deleteMovie
+    deleteMovie: deleteMovie,
+    userUnReviewsMovie: userUnReviewsMovie
 };

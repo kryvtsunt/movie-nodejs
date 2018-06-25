@@ -1,7 +1,8 @@
 module.exports = function (app) {
 
-    app.get('/api/review/movie/:movieId/find', findAllReviews);
-    app.post('/api/review/movie/:movieId/add', userReviewsMovie);
+    app.get('/api/review/movie/:movieId', findAllReviews);
+    app.post('/api/review/movie/:movieId', userReviewsMovie);
+    app.delete('/api/review/movie/:movieId', userDeleteReview);
 
 
     var reviewModel = require('../models/review/review.model.server');
@@ -54,5 +55,25 @@ module.exports = function (app) {
             .then(function (result) {
                 res.send(result);
             })
+    }
+
+    function userDeleteReview(req, res){
+        var body = req.body;
+        var review = body.review;
+        var user = req.session['currentUser']
+        var userId = user._id;
+        var movieId = req.params['movieId']
+        var type = 'delete review'
+        reviewModel.userUnReviewsMovie(userId, movieId, review)
+            .then(function () {
+                return movieModel.decrementMovieReviews(movieId)
+            })
+            .then(function () {
+                return activityModel.addActivity(userId, movieId, type)
+            })
+            .then(function (result) {
+                res.send(result);
+            })
+
     }
 }
