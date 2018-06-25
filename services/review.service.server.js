@@ -29,39 +29,30 @@ module.exports = function (app) {
         var body = req.body;
         var review = body.review;
         var movie = body.movie;
-        var movieId = req.params['movieId'];
         var user = req.session['currentUser']
         var userId = user._id;
+        var movieId;
         var type = 'review'
-        movieModel.findMovieByApiId(movieId)
+        movieModel.findMovieByApiId(movie.id)
             .then(function (m) {
-                    if (m !== null) {
-                        reviewModel.userReviewsMovie(user, m, review)
-                            .then(function () {
-                                movieModel.incrementMovieReviews(m._id)
-                            })
-                            .then(function (result) {
-                                res.send(result);
-                            })
-                    }
-                    else {
-                        movieModel.createMovie(movie)
-                            .then(function (m) {
-                                reviewModel.userReviewsMovie(user, m, review)
-                            })
-                            .then(function () {
-                                movieModel.incrementMovieReviews(m._id)
-                            })
-                            .then(function(){
-                                return activityModel.addActivity(userId, movieId, type)
-                            })
-                            .then(function (result) {
-                                res.send(result);
-                            })
-                    }
+                if (m === null) {
+                    return movieModel.createMovie(movie)
+                } else {
+                    return m
                 }
-            )
-
+            })
+            .then(function (mov) {
+                movieId = mov._id;
+                return reviewModel.userReviewsMovie(user, mov, review)
+            })
+            .then(function () {
+                return movieModel.incrementMovieReviews(movieId)
+            })
+            .then(function () {
+                return activityModel.addActivity(userId, movieId, type)
+            })
+            .then(function (result) {
+                res.send(result);
+            })
     }
 }
-;

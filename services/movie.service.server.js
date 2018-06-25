@@ -6,6 +6,10 @@ module.exports = function (app) {
     app.get('/api/movie/', findAllMovies);
 
     var movieModel = require('../models/movie/movie.model.server');
+    var reviewModel = require('../models/review/review.model.server');
+    var likeModel = require('../models/like/like.model.server');
+    var bookmarkModel = require('../models/bookmark/bookmark.model.server');
+
 
 
     function findMovie(req, res) {
@@ -35,7 +39,16 @@ module.exports = function (app) {
 
     function deleteMovie(req, res) {
         var id = req.params['movieId'];
-        movieModel.deleteMovie(id)
+        likeModel.deleteMovie(id)
+            .then(function(){
+                return bookmarkModel.deleteMovie(id)
+            })
+            .then(function(){
+                return reviewModel.deleteMovie(id)
+            })
+            .then(function(){
+                return movieModel.deleteMovie(id)
+            })
             .then(function (movie) {
                 res.json(movie);
             })

@@ -32,9 +32,14 @@ function findAllReviewsForMovie(movieId) {
         .exec();
 }
 
+function deleteMovie(movieId){
+    return reviewModel.remove({movie: movieId})
+}
+
 
 module.exports = {
     userReviewsMovie: userReviewsMovie,
     findReviewedMoviesForUser: findReviewedMoviesForUser,
     findAllReviewsForMovie: findAllReviewsForMovie,
+    deleteMovie: deleteMovie
 };
