@@ -6,21 +6,32 @@ var activityModel = mongoose.model(
 );
 
 
-function findAllActivities(){
+function findAllActivities() {
     return activityModel.find()
         .populate('movie')
         .populate('user')
         .exec();
 }
 
-function addActivity(userId, movieId, type){
+function addActivity(Id, Id2, type) {
     var date = new Date();
-    var activity = {
-        user: userId,
-        movie: movieId,
-        type: type,
-        date: date
-    };
+    var activity;
+    if (type === 'follow' || type === 'unfollow') {
+        activity = {
+            user: Id,
+            user2: Id2,
+            type: type,
+            date: date
+        };
+    }
+    else {
+        activity = {
+            user: Id,
+            movie: Id2,
+            type: type,
+            date: date
+        };
+    }
     return activityModel.create(activity);
 }
 

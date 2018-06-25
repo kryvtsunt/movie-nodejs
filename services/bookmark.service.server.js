@@ -1,8 +1,8 @@
 module.exports = function (app) {
 
-    app.post('/api/bookmark/movie/add',
+    app.post('/api/bookmark/movie',
         userBookmarksMovie);
-    app.post('/api/bookmark/movie/remove',
+    app.delete('/api/bookmark/movie',
         userUnbookmarksMovie);
     app.get('/api/bookmark/movie/:movieId/check',
         checkBookmark);

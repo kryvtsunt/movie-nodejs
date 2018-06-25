@@ -1,8 +1,8 @@
 module.exports = function (app) {
 
-    app.post('/api/activity/add',
+    app.post('/api/activity',
         userActivitysMovie);
-    app.post('/api/activity/remove',
+    app.delete('/api/activity',
         userUnactivitysMovie);
     app.get('/api/activity/user/:userId/',
         findAllActivitydMoviesForUser);

@@ -1,8 +1,8 @@
 module.exports = function (app) {
 
-    app.post('/api/like/movie/add',
+    app.post('/api/like/movie',
         userLikesMovie);
-    app.post('/api/like/movie/remove',
+    app.delete('/api/like/movie',
         userUnlikesMovie);
     app.get('/api/like/movie/:movieId/check',
         checkLike);

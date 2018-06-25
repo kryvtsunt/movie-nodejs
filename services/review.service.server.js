@@ -62,9 +62,14 @@ module.exports = function (app) {
         var review = body.review;
         var user = req.session['currentUser']
         var userId = user._id;
-        var movieId = req.params['movieId']
+        var apiId = req.params['movieId']
+        var movieId;
         var type = 'delete review'
-        reviewModel.userUnReviewsMovie(userId, movieId, review)
+        movieModel.findMovieByApiId(apiId)
+            .then(function (mov) {
+                movieId = mov._id
+                return reviewModel.userUnReviewsMovie(userId, mov._id, review)
+            })
             .then(function () {
                 return movieModel.decrementMovieReviews(movieId)
             })

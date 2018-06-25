@@ -9,6 +9,8 @@ module.exports = function (app) {
 
     var followModel = require('../models/follow/follow.model.server');
     var movieModel = require('../models/movie/movie.model.server');
+    var activityModel = require('../models/activity/activity.model.server');
+
 
     function findAllFollowings(req, res){
         var userId = req.params['userId']
@@ -37,7 +39,11 @@ module.exports = function (app) {
         var user = req.session['currentUser']
         var userId = user._id
         var user2Id = req.params['userId']
+        var type = 'follow';
         followModel.addFollow(userId, user2Id)
+            .then(function(){
+                return activityModel.addActivity(userId, user2Id, type)
+            })
             .then(function(response){
                 res.json(response)
             })
@@ -57,7 +63,11 @@ module.exports = function (app) {
         var user = req.session['currentUser']
         var userId = user._id
         var user2Id = req.params['userId']
+        var type = 'unfollow';
         followModel.removeFollow(userId, user2Id)
+            .then(function(){
+                return activityModel.addActivity(userId, user2Id, type)
+            })
             .then(function(response){
                 res.json(response)
             })
