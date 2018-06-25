@@ -21,6 +21,22 @@ function addFollow(userId, user2Id){
     return followModel.create(follow);
 }
 
+function removeFollow(userId, user2Id){
+    var follow = {
+        follower: userId,
+        following: user2Id,
+    };
+    return followModel.remove(follow);
+}
+
+function checkFollowing(userId, user2Id){
+    var follow = {
+        follower: userId,
+        following: user2Id,
+    };
+    return followModel.findOne(follow);
+}
+
 function findFollowers(userId) {
     return followModel
         .find({following: userId})
@@ -38,7 +54,9 @@ function findFollowings(userId) {
 module.exports = {
     findAllConnections: findAllConnections,
     addFollow: addFollow,
+    removeFollow: removeFollow,
     findFollowings: findFollowings,
-    findFollowers: findFollowers
+    findFollowers: findFollowers,
+    checkFollowing: checkFollowing
 
 };

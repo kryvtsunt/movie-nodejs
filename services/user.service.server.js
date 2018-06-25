@@ -59,9 +59,9 @@ module.exports = function (app) {
 
     function checkStatus(req, res) {
         if (req.session['currentUser']) {
-            res.send(true)
+            res.json(true)
         }
-        else res.send(false)
+        else res.json(false)
     }
 
     function checkAdminStatus(req, res) {

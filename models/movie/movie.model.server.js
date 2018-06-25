@@ -4,9 +4,8 @@ var movieModel = mongoose.model('MovieModel', movieSchema);
 
 function createMovie(movie) {
     movie.likes = 0;
-    console.log(movie.img_path);
+    movie.reviews = 0;
     movie.poster_path = 'https://image.tmdb.org/t/p/w500/' + movie.poster_path;
-    console.log(movie.img_path);
     return movieModel.create(movie);
 }
 

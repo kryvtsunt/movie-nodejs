@@ -13,6 +13,7 @@ module.exports = function (app) {
 
     var bookmarkModel = require('../models/bookmark/bookmark.model.server');
     var movieModel = require('../models/movie/movie.model.server');
+    var activityModel = require('../models/activity/activity.model.server');
 
 
     function checkBookmark(req, res) {
@@ -49,8 +50,10 @@ module.exports = function (app) {
 
     function userBookmarksMovie(req, res) {
         var movie = req.body;
-        var user = req.session['currentUser']
+        var user = req.session['currentUser'];
+        var userId = user._id;
         var movieId;
+        var type = 'bookmark'
         movieModel.findMovieByApiId(movie.id)
             .then(function (m) {
                 if (m === null) {
@@ -63,6 +66,9 @@ module.exports = function (app) {
                 movieId = mov._id;
                 return bookmarkModel.userBookmarksMovie(user, mov)
             })
+            .then(function(){
+                return activityModel.addActivity(userId, movieId, type)
+            })
             .then(function (result) {
                 res.send(result);
             })
@@ -72,11 +78,16 @@ module.exports = function (app) {
     function userUnbookmarksMovie(req, res) {
         var movie = req.body;
         var user = req.session['currentUser']
+        var userId = user._id;
         var movieId;
+        var type = 'unbookmark'
         movieModel.findMovieByApiId(movie.id)
             .then(function (mov) {
                 movieId = mov._id;
                 return bookmarkModel.userUnbookmarksMovie(user, mov)
+            })
+            .then(function(){
+                return activityModel.addActivity(userId, movieId, type)
             })
             .then(function (result) {
                 res.send(result);

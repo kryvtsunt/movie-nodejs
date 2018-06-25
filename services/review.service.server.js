@@ -6,6 +6,7 @@ module.exports = function (app) {
 
     var reviewModel = require('../models/review/review.model.server');
     var movieModel = require('../models/movie/movie.model.server');
+    var activityModel = require('../models/activity/activity.model.server');
 
 
     function findAllReviews(req, res) {
@@ -30,7 +31,8 @@ module.exports = function (app) {
         var movie = body.movie;
         var movieId = req.params['movieId'];
         var user = req.session['currentUser']
-        var userId = user._id
+        var userId = user._id;
+        var type = 'review'
         movieModel.findMovieByApiId(movieId)
             .then(function (m) {
                     if (m !== null) {
@@ -49,6 +51,9 @@ module.exports = function (app) {
                             })
                             .then(function () {
                                 movieModel.incrementMovieReviews(m._id)
+                            })
+                            .then(function(){
+                                return activityModel.addActivity(userId, movieId, type)
                             })
                             .then(function (result) {
                                 res.send(result);
