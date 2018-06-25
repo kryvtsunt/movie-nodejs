@@ -57,6 +57,20 @@ function checkActivity(userId, movieId) {
     return activityModel.findOne(activity);
 }
 
+function deleteMovie(id){
+    return activityModel.remove({movie: id})
+}
+
+function deleteUser1(id){
+    return activityModel.remove({user: id})
+
+}
+
+function deleteUser2(id){
+    return activityModel.remove({user2: id})
+
+}
+
 
 module.exports = {
     findAllActivities: findAllActivities,
@@ -64,4 +78,7 @@ module.exports = {
     findActivitydMoviesForUser: findActivitydMoviesForUser,
     findUsersforActivitydMovie: findUsersforActivitydMovie,
     checkActivity: checkActivity,
+    deleteMovie: deleteMovie,
+    deleteUser1: deleteUser1,
+    deleteUser2: deleteUser2
 };

@@ -51,12 +51,22 @@ function findFollowings(userId) {
         .exec();
 }
 
+function deleteUser1(userId){
+    return followModel.remove({follower: userId})
+}
+
+function deleteUser2(userId){
+    return followModel.remove({following: userId})
+}
+
 module.exports = {
     findAllConnections: findAllConnections,
     addFollow: addFollow,
     removeFollow: removeFollow,
     findFollowings: findFollowings,
     findFollowers: findFollowers,
-    checkFollowing: checkFollowing
+    checkFollowing: checkFollowing,
+    deleteUser1: deleteUser1,
+    deleteUser2: deleteUser2
 
 };

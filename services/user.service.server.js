@@ -14,6 +14,12 @@ module.exports = function (app) {
     app.get('/api/admin/status', checkAdminStatus);
 
     var userModel = require('../models/user/user.model.server');
+    var likeModel = require('../models/like/like.model.server');
+    var followModel = require('../models/follow/follow.model.server');
+    var bookmarkModel = require('../models/bookmark/bookmark.model.server');
+    var reviewModel = require('../models/review/review.model.server');
+    var activityModel = require('../models/activity/activity.model.server');
+
 
 
 
@@ -52,6 +58,27 @@ module.exports = function (app) {
     function deleteUserById(req, res) {
         var id = req.params['userId'];
         userModel.deleteUser(id)
+            .then(function(){
+                return bookmarkModel.deleteUser(id)
+            })
+            .then(function(){
+                return likeModel.deleteUser(id)
+            })
+            .then(function(){
+                return reviewModel.deleteUser(id)
+            })
+            .then(function(){
+                return followModel.deleteUser1(id)
+            })
+            .then(function(){
+                return followModel.deleteUser2(id)
+            })
+            .then(function(){
+                return activityModel.deleteUser(id)
+            })
+            .then(function(){
+                return activityModel.deleteUser2(id)
+            })
             .then(function (user) {
                 res.json(user);
             })

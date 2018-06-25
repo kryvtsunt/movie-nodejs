@@ -9,6 +9,7 @@ module.exports = function (app) {
     var reviewModel = require('../models/review/review.model.server');
     var likeModel = require('../models/like/like.model.server');
     var bookmarkModel = require('../models/bookmark/bookmark.model.server');
+    var activityModel = require('../models/activity/activity.model.server');
 
 
 
@@ -45,6 +46,9 @@ module.exports = function (app) {
             })
             .then(function(){
                 return reviewModel.deleteMovie(id)
+            })
+            .then(function(){
+                return activityModel.deleteMovie(id)
             })
             .then(function(){
                 return movieModel.deleteMovie(id)

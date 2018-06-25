@@ -13,7 +13,7 @@ function findMovieByApiId(movieId) {
     return movieModel.findOne({id: movieId});
 }
 
-function findAllMovies(){
+function findAllMovies() {
     return movieModel.find();
 }
 
@@ -35,16 +35,18 @@ function decrementMovieLikes(movieId) {
 
 
 function incrementMovieReviews(movieId) {
-    return  movieModel.update({_id: movieId}, {
+    return movieModel.update({_id: movieId}, {
         $inc: {reviews: 1}
     });
 }
 
+
 function decrementMovieReviews(movieId) {
-    return  movieModel.update({_id: movieId}, {
+    return movieModel.update({_id: movieId}, {
         $inc: {reviews: -1}
     });
 }
+
 
 
 function deleteMovie(id) {
@@ -68,9 +70,6 @@ function updateMovie(movieId, movie) {
 }
 
 
-
-
-
 module.exports = {
     createMovie: createMovie,
     findAllMovies: findAllMovies,
@@ -81,5 +80,5 @@ module.exports = {
     incrementMovieReviews: incrementMovieReviews,
     decrementMovieReviews: decrementMovieReviews,
     deleteMovie: deleteMovie,
-    updateMovie: updateMovie
+    updateMovie: updateMovie,
 };

@@ -27,6 +27,10 @@ function deleteMovie(movieId){
     return likeModel.remove({movie: movieId})
 }
 
+function deleteUser(userId){
+    return likeModel.remove({user: userId})
+}
+
 function findLikedMoviesForUser(userId) {
     return likeModel
         .find({user: userId})
@@ -56,5 +60,6 @@ module.exports = {
     findLikedMoviesForUser: findLikedMoviesForUser,
     findUsersforLikedMovie: findUsersforLikedMovie,
     checkLike: checkLike,
-    deleteMovie: deleteMovie
+    deleteMovie: deleteMovie,
+    deleteUser: deleteUser
 };

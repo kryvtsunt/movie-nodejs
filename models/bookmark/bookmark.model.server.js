@@ -49,6 +49,10 @@ function deleteMovie(movieId){
     return bookmarkModel.remove({movie: movieId})
 }
 
+function deleteUser(userId){
+    return bookmarkModel.remove({user: userId})
+}
+
 
 module.exports = {
     userBookmarksMovie: userBookmarksMovie,
@@ -56,5 +60,6 @@ module.exports = {
     findBookmarkedMoviesForUser: findBookmarkedMoviesForUser,
     findUsersforBookmarkedMovie: findUsersforBookmarkedMovie,
     checkBookmark: checkBookmark,
-    deleteMovie: deleteMovie
+    deleteMovie: deleteMovie,
+    deleteUser: deleteUser
 };
