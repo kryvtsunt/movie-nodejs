@@ -10,6 +10,7 @@ function findAllActivities() {
     return activityModel.find()
         .populate('movie')
         .populate('user')
+        .populate('user2')
         .exec();
 }
 

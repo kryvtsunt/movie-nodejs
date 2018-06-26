@@ -45,6 +45,7 @@ function findUsersforLikedMovie(movieId) {
         .exec();
 }
 
+
 function checkLike(userId, movieId) {
     var like = {
         user: userId,

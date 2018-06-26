@@ -22,6 +22,7 @@ module.exports = function (app) {
 
     }
 
+
     function findAllMovies(req, res){
         movieModel.findAllMovies()
             .then(function (movies) {

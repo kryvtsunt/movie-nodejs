@@ -4,10 +4,12 @@ module.exports = function (app) {
         userLikesMovie);
     app.delete('/api/like/movie',
         userUnlikesMovie);
-    app.get('/api/like/movie/:movieId/check',
+    app.get('/api/like/movie/:movieId',
         checkLike);
     app.get('/api/like/user/:userId/movie/',
         findAllLikedMoviesForUser);
+    app.get('/api/like/movie/:movieId/user/', findUsersForLikedMovie)
+
 
     var likeModel = require('../models/like/like.model.server');
     var movieModel = require('../models/movie/movie.model.server');
@@ -43,6 +45,14 @@ module.exports = function (app) {
             .then(function (result) {
                 res.json(result);
             })
+    }
+
+    function findUsersForLikedMovie(req, res) {
+        var id = req.params['movieId'];
+        likeModel.findUsersforLikedMovie(id)
+            .then(function (movie) {
+                res.json(movie)
+            });
     }
 
 
