@@ -74,7 +74,7 @@ module.exports = function (app) {
                 return followModel.deleteUser2(id)
             })
             .then(function(){
-                return activityModel.deleteUser(id)
+                return activityModel.deleteUser1(id)
             })
             .then(function(){
                 return activityModel.deleteUser2(id)
@@ -100,7 +100,7 @@ module.exports = function (app) {
 
     function logout(req, res) {
         req.session.destroy();
-        res.send(200);
+        res.sendStatus(200);
     }
 
     function findUserById(req, res) {

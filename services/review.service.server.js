@@ -33,7 +33,7 @@ module.exports = function (app) {
         var user = req.session['currentUser']
         var userId = user._id;
         var movieId;
-        var type = 'review'
+        var type = 'add review'
         movieModel.findMovieByApiId(movie.id)
             .then(function (m) {
                 if (m === null) {
