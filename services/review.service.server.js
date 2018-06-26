@@ -2,7 +2,7 @@ module.exports = function (app) {
 
     app.get('/api/review/movie/:movieId', findAllReviews);
     app.post('/api/review/movie/:movieId', userReviewsMovie);
-    app.delete('/api/review/movie/:movieId', userDeleteReview);
+    app.delete('/api/review/movie/:movieId/user/:userId', deleteReview);
 
 
     var reviewModel = require('../models/review/review.model.server');
@@ -57,11 +57,10 @@ module.exports = function (app) {
             })
     }
 
-    function userDeleteReview(req, res){
+    function deleteReview(req, res){
         var body = req.body;
         var review = body.review;
-        var user = req.session['currentUser']
-        var userId = user._id;
+        var userId = req.params['userId']
         var apiId = req.params['movieId']
         var movieId;
         var type = 'delete review'
